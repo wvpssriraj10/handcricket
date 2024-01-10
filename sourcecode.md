@@ -1,4 +1,4 @@
-# Cricket Game by w.v.p.s.sriraj, dm me in insta for more info!
+# Cricket Game by w.v.p.s.sriraj
 print(""" ~~~~ Computer Cricket Saga ~~~~  
 RULES AND REGULATIONS: 
 1. You have to select any random number between 1 to 6 (1 and 6 included). 
@@ -7,8 +7,8 @@ RULES AND REGULATIONS:
 4. While bowling, if the number selected by you and the computer is different, then the computer's number will add to its runs. If the number selected by you and the computer is the same, then the computer will lose its wicket.
 5. Each player will get 5 wickets and 3 overs (18 balls) for batting and bowling. 
 6. The innings will end after either the five wickets fell or the overs end. 
-7. The player with maximum runs wins.
-8. While choosing the toss, if u typed any other word except heads or tails or did any spelling mistake, the system will take default and will win the win the toss which eventually lead u losing the toss.
+7. The player with the maximum runs wins.
+8. While choosing the toss, if you typed any other word except heads or tails or did any spelling mistake, the system will take default and will win the toss, which will eventually lead you to lose the toss.
 9. All the best guys :) 
 """) 
 
@@ -18,7 +18,11 @@ import random
 
 # Toss
 print("\nTime for the toss!")
-toss = input("Choose heads / tails: ").lower()
+toss = input("Choose heads/tails: ").lower().strip()
+
+while toss not in ["heads", "tails"]:
+    print("It's not heads nor tails, try again.")
+    toss = input("Choose heads/tails: ").lower().strip()
 
 random_toss = random.randint(1, 2)
 random_opt = random.randint(1, 2)
@@ -29,10 +33,20 @@ if random_toss == 1 and toss == "heads":
     print("\nYou won the toss")
     # In random_toss (1 = Heads) and (2 = Tails)
     # In random_opt (1 = bat) and (2 = ball)
-    u_opt = input("Choose bat or ball: ").lower()
+    u_opt = input("Choose bat or ball: ").lower().strip()
+
+    while u_opt not in ["bat", "ball"]:
+        print("It's not bat nor ball, choose wisely.")
+        u_opt = input("Choose bat or ball: ").lower().strip()
+
 elif random_toss == 2 and toss == "tails":
     print("\nYou won the toss")
-    u_opt = input("Choose bat or ball: ").lower()
+    u_opt = input("Choose bat or ball: ").lower().strip()
+
+    while u_opt not in ["bat", "ball"]:
+        print("It's not bat nor ball, choose wisely.")
+        u_opt = input("Choose bat or ball: ").lower().strip()
+
 else:
     print("\nYou lost the toss :( ")
 
@@ -49,36 +63,41 @@ runs_1 = 0
 wickets_1 = 0
 balls_1 = 0
 
-while wickets_1 != 5 and balls_1 != 18:
-    u_choice = int(input("\nChoose any number from 1 to 6: "))
-    c_choice = random.randint(1, 6)
+while wickets_1 != 5 and balls_1 < 18:
+    try:
+        u_choice = int(input("\nChoose any number from 1 to 6: "))
+        if 1 <= u_choice <= 6:
+            print("Player's choice: ", u_choice)
+            c_choice = random.randint(1, 6)
+            print("Computer's choice: ", c_choice)
 
-    if u_choice < 1 or u_choice > 6:
-        print("\nChoose a value from 1 to 6.")
-    else:
-        print("Player's choice: ", u_choice, "\nComputer's choice: ", c_choice)
-        if u_choice == c_choice:
-            wickets_1 += 1
+            if u_choice == c_choice:
+                wickets_1 += 1
+                print("You(player) lost a wicket! Remaining wickets:", 5 - wickets_1)
+            else:
+                if u_opt == "bat" or c_opt == "ball":
+                    Bat_first = "You(player)"
+                    Ball_first = "Computer"
+                    runs_1 += u_choice
+                elif u_opt == "ball" or c_opt == "bat":
+                    Bat_first = "Computer"
+                    Ball_first = "You(player)"
+                    runs_1 += c_choice
+                print("\nScore =", runs_1, "/", wickets_1)
+                balls_1 += 1
+
+                if balls_1 == 6:
+                    print("End of Over 1!")
+                elif balls_1 == 12:
+                    print("End of Over 2!")
+                elif balls_1 == 18:
+                    print("End of Over 3!")
+
+                print("Balls remaining:", 18 - balls_1)
         else:
-            if u_opt == "bat" or c_opt == "ball":
-                Bat_first = "You(player)"
-                Ball_first = "Computer"
-                runs_1 += u_choice
-            elif u_opt == "ball" or c_opt == "bat":
-                Bat_first = "Computer"
-                Ball_first = "You(player)"
-                runs_1 += c_choice
-            print("\nScore =", runs_1, "/", wickets_1)
-            balls_1 += 1
-
-        if balls_1 == 6:
-            print("End of Over 1!")
-        elif balls_1 == 12:
-            print("End of Over 2!")
-        elif balls_1 == 18:
-            print("End of over 3!")
-
-        print("Balls remaining: ", 18 - balls_1)
+            print("Please choose a number between 1 and 6.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
 
 print("\n--------------- End of Innings ---------------")
 print("\nFinal Score:")
@@ -93,36 +112,41 @@ runs_2 = 0
 wickets_2 = 0
 balls_2 = 0
 
-while wickets_2 != 5 and balls_2 != 18 and runs_2 <= runs_1:
-    u_choice = int(input("\nChoose any number from 1 to 6: "))
-    c_choice = random.randint(1, 6)
+while wickets_2 != 5 and balls_2 < 18 and runs_2 <= runs_1:
+    try:
+        u_choice = int(input("\nChoose any number from 1 to 6: "))
+        if 1 <= u_choice <= 6:
+            print("Player's choice: ", u_choice)
+            c_choice = random.randint(1, 6)
+            print("Computer's choice: ", c_choice)
 
-    if u_choice < 1 or u_choice > 6:
-        print("\nChoose a value from 1 to 6.")
-    else:
-        print("Player's choice: ", u_choice, "\nComputer's choice: ", c_choice)
-        if u_choice == c_choice:
-            wickets_2 += 1
+            if u_choice == c_choice:
+                wickets_2 += 1
+                print("You(player) lost a wicket! Remaining wickets:", 5 - wickets_2)
+            else:
+                if Bat_first == "Computer":
+                    runs_2 += u_choice
+                    Bat_second = "You(player)"
+                elif Bat_first == "You(player)":
+                    runs_2 += c_choice
+                    Bat_second = "Computer"
+
+                print("\nScore is =", runs_2, "/", wickets_2)
+                balls_2 += 1
+
+                if balls_2 == 6:
+                    print("End of Over 1!")
+                elif balls_2 == 12:
+                    print("End of Over 2!")
+                elif balls_2 == 18:
+                    print("End of Over 3!")
+
+                if runs_2 <= runs_1 and balls_2 <= 17 and wickets_2 != 5:
+                    print("RRR:", runs_1 - runs_2 + 1, "runs needed from", 18 - balls_2, "balls.")
         else:
-            if Bat_first == "Computer":
-                runs_2 += u_choice
-                Bat_second = "You(player)"
-            elif Bat_first == "You(player)":
-                runs_2 += c_choice
-                Bat_second = "Computer"
-
-            print("\nScore is =", runs_2, "/", wickets_2)
-            balls_2 += 1
-
-            if balls_2 == 6:
-                print("End of Over 1!")
-            elif balls_2 == 12:
-                print("End of Over 2!")
-            elif balls_2 == 18:
-                print("End of over 3!")
-
-        if runs_2 <= runs_1 and balls_2 <= 17 and wickets_2 != 5:
-            print("RRR:", runs_1 - runs_2 + 1, "runs needed from", 18 - balls_2, "balls.")
+            print("Please choose a number between 1 and 6.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
 
 print("\n---------- End of the Innings!!!")
 print("\nFinal Score:")
